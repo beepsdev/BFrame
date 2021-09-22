@@ -39,7 +39,7 @@ class Instance extends events.EventEmitter {
      */
     start(){
         this.emit('starting', this.#client);
-        this.#client.login(this.DISCORD_TOKEN);
+        this.#client.login(this.#DISCORD_TOKEN);
     }
 
     emit(event, ...data) {
