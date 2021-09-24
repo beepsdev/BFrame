@@ -11,7 +11,7 @@ class Instance extends events.EventEmitter {
     #DISCORD_CLIENT_SECRET;
     #DISCORD_PUBLIC_KEY;
 
-    #client;
+    client;
     commands;
 
     constructor(options){
@@ -23,13 +23,14 @@ class Instance extends events.EventEmitter {
         this.#DISCORD_CLIENT_SECRET = options.client_secret;
         this.#DISCORD_PUBLIC_KEY = options.public_key;
 
-        this.#client = new Client({ intents: options.intents });
-        this.#client.emit = this.emit;
-        this.#client.instance = this;
+        this.client = new Client({ intents: options.intents });
+        this.client.emit = this.emit;
+        this.client.token = this.#DISCORD_TOKEN;
+        this.client.instance = this;
 
-        this.commands = new SlashManager(this.#client);
+        this.commands = new SlashManager(this.client);
 
-        this.#client.on('*', (event, ...data) => {
+        this.client.on('*', (event, ...data) => {
             this.emit(`client:${event}`, ...data)
         })
     }
@@ -38,8 +39,8 @@ class Instance extends events.EventEmitter {
      *  Starts the instance and logs it in to discord.
      */
     start(){
-        this.emit('starting', this.#client);
-        this.#client.login(this.#DISCORD_TOKEN);
+        this.emit('starting', this.client);
+        this.client.login(this.#DISCORD_TOKEN);
     }
 
     emit(event, ...data) {
