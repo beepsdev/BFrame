@@ -23,7 +23,7 @@ class Instance extends events.EventEmitter {
         this.#DISCORD_CLIENT_SECRET = options.client_secret;
         this.#DISCORD_PUBLIC_KEY = options.public_key;
 
-        this.#client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+        this.#client = new Client({ intents: options.intents });
         this.#client.emit = this.emit;
         this.#client.instance = this;
 
@@ -43,7 +43,7 @@ class Instance extends events.EventEmitter {
     }
 
     emit(event, ...data) {
-        super.emit('*', [event, ...data]);
+        super.emit('*', event, ...data);
         super.emit(event, data);
     }
 
