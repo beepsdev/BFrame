@@ -52,14 +52,17 @@ class SlashManager {
 
             const new_commands = Object.values(this.commands).map(command => new command().toJSON());
             this.rest.put(Routes.applicationCommands(this.client.instance.DISCORD_CLIENT_ID), { body: new_commands })
-                .then(() => console.log('Successfully registered application commands.'))
+                .then(() => {
+                    this.saveHashes();
+                })
                 .catch(console.error);
 
             this.rest.put(Routes.applicationGuildCommands(this.client.instance.DISCORD_CLIENT_ID, '720345137460412476'), { body: new_commands })
-                .then(() => console.log('Successfully registered application commands.'))
+                .then(() => {
+
+                })
                 .catch(console.error);
 
-            this.saveHashes();
         }
 
 
