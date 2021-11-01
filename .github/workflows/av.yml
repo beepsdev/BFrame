@@ -1,0 +1,18 @@
+name: av-scan
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  av-scan:
+    runs-on: ubuntu-latest
+    name: AV scan
+    steps:
+    - uses: actions/checkout@v2
+    - name: Git AV Scan
+      uses: djdefi/gitavscan@main
+
